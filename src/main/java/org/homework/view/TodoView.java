@@ -1,5 +1,6 @@
 package org.homework.view;
 
+
 import org.homework.controller.TodoController;
 import org.homework.dto.Todo;
 import org.homework.repository.TodoRepository;
@@ -7,9 +8,9 @@ import org.homework.repository.TodoRepository;
 import java.util.Scanner;
 
 public class TodoView {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        TodoController todoController;
+    Scanner sc = new Scanner(System.in);
+    TodoController todoController = new TodoController(new TodoRepository());
+    public void run() {
         while (true) {
             System.out.println("옵션을 선택하세요: 1. 추가, 2. 삭제, 3. 조회, 4. 종료");
             int num = Integer.parseInt(sc.nextLine());
@@ -31,20 +32,14 @@ public class TodoView {
             }
         }
     }
-
-    private static void setTodo() {
-        Scanner sc = new Scanner(System.in);
-        TodoController todoController = new TodoController();
+    private void setTodo() {
         String todoString = sc.nextLine();
         Todo todo = new Todo(todoString);
-        Todo todo1 = todoController.setTodo(todo);
-        System.out.println("할 일이 추가되었습니다. ID: [" + todo1.getTodoNum() + "]");
-        sc.close();
+        int todoNum = todoController.setTodo(todo);
+        System.out.println("할 일이 추가되었습니다. ID: [" + todoNum + "]");
     }
 
-    private static void getTodo() {
-        Scanner sc = new Scanner(System.in);
-        TodoController todoController = new TodoController();
+    private void getTodo() {
         int num = Integer.parseInt(sc.nextLine());
         Todo todo = todoController.getTodo(num);
         if (todo != null) {
@@ -52,12 +47,9 @@ public class TodoView {
         } else {
             System.out.println("해당 ID의 할 일이 없습니다.");
         }
-        sc.close();
     }
 
-    private static void deleteTodo() {
-        Scanner sc = new Scanner(System.in);
-        TodoController todoController = new TodoController();
+    private void deleteTodo() {
         int num = Integer.parseInt(sc.nextLine());
         if (todoController.deleteTodo(num)) {
             System.out.println("할 일이 삭제되었습니다. ID: [" + num + "]");

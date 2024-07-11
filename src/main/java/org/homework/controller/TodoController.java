@@ -5,7 +5,11 @@ import org.homework.repository.TodoRepository;
 
 public class TodoController {
     TodoRepository todoRepository;
-    public Todo setTodo(Todo todo) {
+
+    public TodoController(TodoRepository todoRepository) {
+        this.todoRepository = todoRepository;
+    }
+    public int setTodo(Todo todo) {
         return todoRepository.setTodo(todo);
     }
     public Todo getTodo(int todoNum) {
