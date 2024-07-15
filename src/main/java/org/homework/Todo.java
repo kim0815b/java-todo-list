@@ -1,15 +1,24 @@
 package org.homework;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Todo {
     private int id;
     private String content;
-    private Boolean status;
+    private boolean status;
+    private Date endDate;
 
     public Todo() {
     }
 
     public Todo(String content) {
         this.content = content;
+    }
+
+    public Todo(String content, Date endDate) {
+        this.content = content;
+        this.endDate = endDate;
     }
 
     public int getId() {
@@ -28,11 +37,27 @@ public class Todo {
         this.content = content;
     }
 
-    public Boolean getStatus() {
+    public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    @Override
+    public String toString() {
+        return  id + "\t\t"+
+                content + "\t\t\t" +
+                status + "\t\t"+
+                new SimpleDateFormat("yyyy/MM/dd").format(endDate);
     }
 }

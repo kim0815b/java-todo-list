@@ -1,20 +1,35 @@
 package org.homework;
 
+import java.util.IllformedLocaleException;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class TodoService {
-    private TodoRepository todoRepository;
-    public Todo findById(int id) {
-        return Optional.ofNullable(todoRepository.findById(id))
-                .orElseThrow();
+    private final TodoRepository todoRepository;
+
+    public TodoService() {
+        this.todoRepository = new TodoRepository();
     }
-    public void save(String content) {
-        todoRepository.save(new Todo(content));
+
+    public Optional<Todo> findById(int id) {
+        return todoRepository.findById(id);
+    }
+    public int save(Todo todo) {
+        return todoRepository.save(todo);
+    }
+
+    public boolean existsById(int id) {
+        return todoRepository.existsById(id);
     }
     public void delete(int id) {
         todoRepository.deleteById(id);
     }
     public void update(Todo todo) {
         todoRepository.update(todo);
+    }
+
+    public Map<Integer, Todo> selectAll() {
+        return todoRepository.selectAll();
     }
 }

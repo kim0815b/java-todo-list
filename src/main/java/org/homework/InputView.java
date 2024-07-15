@@ -1,5 +1,6 @@
 package org.homework;
 
+import java.util.Date;
 import java.util.Scanner;
 
 public class InputView {
@@ -13,8 +14,7 @@ public class InputView {
         return Integer.parseInt(sc.nextLine());
     }
 
-    public static String inputContent() {
+    public static String inputString() {
         return sc.nextLine();
     }
-
 }
