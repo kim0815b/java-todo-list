@@ -1,6 +1,7 @@
 package org.homework;
 
 import java.util.IllformedLocaleException;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -12,8 +13,9 @@ public class TodoService {
         this.todoRepository = new TodoRepository();
     }
 
-    public Optional<Todo> findById(int id) {
-        return todoRepository.findById(id);
+    public Todo findById(int id) {
+        return todoRepository.findById(id)
+                .orElseThrow(RuntimeException::new);
     }
     public int save(Todo todo) {
         return todoRepository.save(todo);
@@ -31,5 +33,9 @@ public class TodoService {
 
     public Map<Integer, Todo> selectAll() {
         return todoRepository.selectAll();
+    }
+
+    public List<Todo> search(String content) {
+        return todoRepository.search(content);
     }
 }

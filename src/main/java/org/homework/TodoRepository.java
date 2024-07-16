@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class TodoRepository {
@@ -33,5 +34,11 @@ public class TodoRepository {
 
     public Map<Integer,Todo> selectAll() {
         return todoMap;
+    }
+
+    public List<Todo> search(String content) {
+        return todoMap.values().stream()
+                .filter(todo -> todo.getContent().contains(content))
+                .collect(Collectors.toList());
     }
 }

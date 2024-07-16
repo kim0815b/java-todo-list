@@ -25,8 +25,12 @@ public class TodoController {
                     delete();
                     break;
                 case SELECT:
+                    select();
+                    break;
+                case SELECTALL:
                     selectAll();
-//                    select();
+                case SEARCH:
+                    search();
                     break;
                 case EXIT:
                     exit();
@@ -51,22 +55,29 @@ public class TodoController {
         int num = InputView.inputNum();
         if (todoService.existsById(num)) {
             todoService.delete(num);
+            OutputView.outPutDeleteTodo(num);
         } else {
             OutputView.outPutTodoIfNull();
         }
     }
 
     private void select() {
-        Optional<Todo> findByIdTodo = todoService.findById(InputView.inputNum());
-        if (findByIdTodo.isPresent()) {
-            OutputView.outPutSelectTodo(findByIdTodo.get());
-        } else {
+        OutputView.outPutSelectNum();
+        try {
+            OutputView.outPutSelectTodo(
+                    todoService.findById(InputView.inputNum())
+            );
+        } catch (RuntimeException e) {
             OutputView.outPutTodoIfNull();
         }
-
+//        if (findByIdTodo.isPresent()) {
+//            OutputView.outPutSelectTodo(findByIdTodo.get());
+//        } else {
+//            OutputView.outPutTodoIfNull();
+//        }
     }
     private void selectAll() {
-        OutputView.outPutTodoAll(todoService.selectAll());
+        OutputView.outPutTodoAll(todoService.selectAll().values());
     }
     private void exit() {
         OutputView.outPutFinishProgram();
@@ -75,6 +86,10 @@ public class TodoController {
         OutputView.outPutError();
     }
 
+    private void search() {
+        OutputView.outPutSearchContent();
+        OutputView.outPutTodoAll(todoService.search(InputView.inputString()));
+    }
     private Date inputDate() {
         OutputView.outPutAddEndDate();
         String endDateStr = InputView.inputString();
