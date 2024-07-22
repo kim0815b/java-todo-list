@@ -10,9 +10,14 @@ import java.util.stream.Stream;
 
 public class TodoController {
     private final TodoService todoService;
-
-    public TodoController() {
-        this.todoService = new TodoService();
+    private final InputView inputView;
+    private final OutputView outputView;
+    public TodoController(TodoService todoService,
+                          InputView inputView,
+                          OutputView outputView) {
+        this.todoService = todoService;
+        this.inputView = inputView;
+        this.outputView = outputView;
     }
 
     public void run() {
@@ -42,6 +47,8 @@ public class TodoController {
                 }
             } catch (ParseException e) {
                 System.out.println("날짜를 잘못 입력했습니다.");
+            } catch (NumberFormatException e) {
+                System.out.println("숫자를 입력해주세요.");
             } catch (IllegalArgumentException e) {
                 System.out.println("할 일이 없습니다.");
             }
@@ -49,46 +56,46 @@ public class TodoController {
     }
 
     private Menu choiceMenu() {
-        return InputView.inputMenu();
+        return inputView.inputMenu();
     }
 
     private void save() throws ParseException {
-        String content = InputView.inputContent();
-        Date date = InputView.inputDate();
+        String content = inputView.inputContent();
+        Date date = inputView.inputDate();
         Todo todo = new Todo(content, date);
-        OutputView.outPutAddTodo(todoService.save(todo));
+        outputView.outPutAddTodo(todoService.save(todo));
     }
 
-    private void delete() {
-        int num = InputView.inputDeleteById();
-        OutputView.outPutDeleteTodo(
+    private void delete() throws IllegalArgumentException{
+        int num = inputView.inputDeleteById();
+        outputView.outPutDeleteTodo(
                 todoService.delete(num),
                 num
         );
     }
 
     private void select() throws IllegalArgumentException {
-        Todo todo = todoService.findById(InputView.inputFindById())
+        Todo todo = todoService.findById(inputView.inputFindById())
                 .orElseThrow(IllegalArgumentException::new);
-        OutputView.outPutSelectTodo(todo);
+        outputView.outPutSelectTodo(todo);
     }
 
     private void selectAll() {
-        OutputView.outPutTodoAll(todoService.selectAll().values());
+        outputView.outPutTodoAll(todoService.selectAll().values());
     }
 
     private void exit() {
-        OutputView.outPutFinishProgram();
+        outputView.outPutFinishProgram();
     }
 
     private void error() {
-        OutputView.outPutError();
+        outputView.outPutError();
     }
 
     private void search() {
-        OutputView.outPutTodoAll(
+        outputView.outPutTodoAll(
                 todoService.search(
-                        InputView.inputSearchContent()
+                        inputView.inputSearchContent()
                 )
         );
     }

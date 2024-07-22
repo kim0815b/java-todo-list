@@ -6,24 +6,24 @@ import java.util.Comparator;
 import java.util.Map;
 
 public class OutputView {
-    public static void outPutAddTodo(int id) {
+    public void outPutAddTodo(int id) {
         System.out.println("할 일이 추가되었습니다. ID: ["+id+"]");
     }
 
-    public static void outPutDeleteTodo(boolean isDelete, int id) {
+    public void outPutDeleteTodo(boolean isDelete, int id) {
         if (isDelete) {
             System.out.println("할 일이 삭제되었습니다. ID: [" + id + "]");
         } else {
             System.out.println("해당 ID의 할 일이 없습니다.");
         }
     }
-    public static void outPutSelectTodo(Todo todo) {
+    public void outPutSelectTodo(Todo todo) {
         System.out.println("할 일 ID: ["+todo.getId()+"] 내용: ["+todo.getContent()+"]");
     }
-    public static void outPutFinishProgram() {
+    public void outPutFinishProgram() {
         System.out.println("프로그램을 종료합니다.");
     }
-    public static void outPutError() {
+    public void outPutError() {
         System.out.println("다시 입력해주세요.");
     }
 
@@ -36,7 +36,7 @@ public class OutputView {
 //                .sorted(Comparator.comparing(Todo::getEndDate).reversed())
 //                .forEach(System.out ::println);
 //    }
-    public static void outPutTodoAll(Collection<Todo> todoCollection) {
+    public void outPutTodoAll(Collection<Todo> todoCollection) {
         System.out.println("ID \t\t내용 \t\t\t상태\t\t마감일");
         System.out.println("----------------------------------------------");
         todoCollection.stream()

@@ -6,37 +6,40 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class InputView {
-    private static Scanner sc = new Scanner(System.in);
+    public InputView() {
+        this.sc = new Scanner(System.in);
+    }
+    private Scanner sc;
 
-    public static Menu inputMenu() {
+    public Menu inputMenu() {
         System.out.println("옵션을 선택하세요: 1. 추가, 2. 삭제, 3. 번호 조회, 4. 조회, 5.검색, 6.종료");
         return Menu.get(Integer.parseInt(sc.nextLine()));
     }
-    public static int inputDeleteById() {
+
+    public int inputDeleteById() {
         System.out.println("삭제할 번호를 입력해주세요.");
         return Integer.parseInt(sc.nextLine());
     }
-    public static int inputFindById() {
+
+    public int inputFindById() {
         System.out.println("검색할 번호를 입력해주세요.");
         return Integer.parseInt(sc.nextLine());
     }
-    public static String inputSearchContent() {
+
+    public String inputSearchContent() {
         System.out.println("검색어를 입력해주세요");
         return sc.nextLine();
     }
-    public static String inputContent() {
+
+    public String inputContent() {
         System.out.println("할일을 적어주세요. ");
         return sc.nextLine();
     }
 
-    public static Date inputDate() throws ParseException {
+    public Date inputDate() throws ParseException {
         System.out.println("마감일을 입력해주세요 ex) YYYYMMDD");
         String endDateStr = sc.nextLine();
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
         return format.parse(endDateStr);
-    }
-
-    public static String inputString() {
-        return sc.nextLine();
     }
 }

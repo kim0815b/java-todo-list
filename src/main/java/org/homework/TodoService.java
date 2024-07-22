@@ -10,8 +10,8 @@ import java.util.stream.Stream;
 public class TodoService {
     private final TodoRepository todoRepository;
 
-    public TodoService() {
-        this.todoRepository = new TodoRepository();
+    public TodoService(TodoRepository todoRepository) {
+        this.todoRepository = todoRepository;
     }
 
     public Optional<Todo> findById(int id){
@@ -24,12 +24,12 @@ public class TodoService {
     public boolean existsById(int id) {
         return todoRepository.existsById(id);
     }
-    public boolean delete(int id) {
+    public boolean delete(int id) throws IllegalArgumentException{
         if (todoRepository.existsById(id)) {
             todoRepository.deleteById(id);
             return true;
         }
-        return false;
+        throw new IllegalArgumentException();
     }
     public void update(Todo todo) {
         todoRepository.update(todo);
