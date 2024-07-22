@@ -15,90 +15,81 @@ public class TodoController {
         this.todoService = new TodoService();
     }
 
-    public void run(){
+    public void run() {
         while (true) {
-            switch (choiceMenu()) {
-                case ADD:
-                    save();
-                    break;
-                case DELETE:
-                    delete();
-                    break;
-                case SELECT:
-                    select();
-                    break;
-                case SELECTALL:
-                    selectAll();
-                case SEARCH:
-                    search();
-                    break;
-                case EXIT:
-                    exit();
-                    return;
-                case NONE:
-                    error();
-                    break;
+            try {
+                switch (choiceMenu()) {
+                    case ADD:
+                        save();
+                        break;
+                    case DELETE:
+                        delete();
+                        break;
+                    case SELECT:
+                        select();
+                        break;
+                    case SELECTALL:
+                        selectAll();
+                    case SEARCH:
+                        search();
+                        break;
+                    case EXIT:
+                        exit();
+                        return;
+                    case NONE:
+                        error();
+                        break;
+                }
+            } catch (ParseException e) {
+                System.out.println("날짜를 잘못 입력했습니다.");
+            } catch (IllegalArgumentException e) {
+                System.out.println("할 일이 없습니다.");
             }
         }
     }
+
     private Menu choiceMenu() {
-        OutputView.outPutChoiceMenu();
         return InputView.inputMenu();
     }
-    private void save(){
-        String content = InputView.inputString();
-        Date date = inputDate();
-        Todo todo = new Todo(content,date);
+
+    private void save() throws ParseException {
+        String content = InputView.inputContent();
+        Date date = InputView.inputDate();
+        Todo todo = new Todo(content, date);
         OutputView.outPutAddTodo(todoService.save(todo));
     }
+
     private void delete() {
-        int num = InputView.inputNum();
-        if (todoService.existsById(num)) {
-            todoService.delete(num);
-            OutputView.outPutDeleteTodo(num);
-        } else {
-            OutputView.outPutTodoIfNull();
-        }
+        int num = InputView.inputDeleteById();
+        OutputView.outPutDeleteTodo(
+                todoService.delete(num),
+                num
+        );
     }
 
-    private void select() {
-        OutputView.outPutSelectNum();
-        try {
-            OutputView.outPutSelectTodo(
-                    todoService.findById(InputView.inputNum())
-            );
-        } catch (RuntimeException e) {
-            OutputView.outPutTodoIfNull();
-        }
-//        if (findByIdTodo.isPresent()) {
-//            OutputView.outPutSelectTodo(findByIdTodo.get());
-//        } else {
-//            OutputView.outPutTodoIfNull();
-//        }
+    private void select() throws IllegalArgumentException {
+        Todo todo = todoService.findById(InputView.inputFindById())
+                .orElseThrow(IllegalArgumentException::new);
+        OutputView.outPutSelectTodo(todo);
     }
+
     private void selectAll() {
         OutputView.outPutTodoAll(todoService.selectAll().values());
     }
+
     private void exit() {
         OutputView.outPutFinishProgram();
     }
+
     private void error() {
         OutputView.outPutError();
     }
 
     private void search() {
-        OutputView.outPutSearchContent();
-        OutputView.outPutTodoAll(todoService.search(InputView.inputString()));
+        OutputView.outPutTodoAll(
+                todoService.search(
+                        InputView.inputSearchContent()
+                )
+        );
     }
-    private Date inputDate() {
-        OutputView.outPutAddEndDate();
-        String endDateStr = InputView.inputString();
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-        try {
-            return format.parse(endDateStr);
-        } catch (ParseException e) {
-            return null;
-        }
-    }
-
 }
