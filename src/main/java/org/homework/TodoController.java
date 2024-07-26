@@ -33,8 +33,6 @@ public class TodoController {
                     case SELECT:
                         select();
                         break;
-                    case SELECTALL:
-                        selectAll();
                     case SEARCH:
                         search();
                         break;
@@ -78,10 +76,6 @@ public class TodoController {
         Todo todo = todoService.findById(inputView.inputFindById())
                 .orElseThrow(IllegalArgumentException::new);
         outputView.outPutSelectTodo(todo);
-    }
-
-    private void selectAll() {
-        outputView.outPutTodoAll(todoService.selectAll().values());
     }
 
     private void exit() {

@@ -24,7 +24,7 @@ public class TodoService {
     public boolean existsById(int id) {
         return todoRepository.existsById(id);
     }
-    public boolean delete(int id) throws IllegalArgumentException{
+    public boolean delete(int id) {
         if (todoRepository.existsById(id)) {
             todoRepository.deleteById(id);
             return true;
@@ -33,10 +33,6 @@ public class TodoService {
     }
     public void update(Todo todo) {
         todoRepository.update(todo);
-    }
-
-    public Map<Integer, Todo> selectAll() {
-        return todoRepository.selectAll();
     }
 
     public List<Todo> search(String content) {

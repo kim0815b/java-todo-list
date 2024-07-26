@@ -55,10 +55,6 @@ public class Todo {
 
     @Override
     public String toString() {
-//        return  id + "\t\t"+
-//                content + "\t\t\t" +
-//                (status?"완료":"미완료") + "\t\t"+
-//                new SimpleDateFormat("yyyy/MM/dd").format(endDate);
         return String.format("%-6d%-12s%-6s%tF", id,content,status ? "완료" : "미완료",endDate);
     }
 }

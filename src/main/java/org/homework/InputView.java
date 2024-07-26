@@ -6,13 +6,13 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class InputView {
+    private Scanner sc;
     public InputView() {
         this.sc = new Scanner(System.in);
     }
-    private Scanner sc;
 
     public Menu inputMenu() {
-        System.out.println("옵션을 선택하세요: 1. 추가, 2. 삭제, 3. 번호 조회, 4. 조회, 5.검색, 6.종료");
+        System.out.println("옵션을 선택하세요: 1. 추가, 2. 삭제, 3. 번호 조회, 5.검색, 6.종료");
         return Menu.get(Integer.parseInt(sc.nextLine()));
     }
 
