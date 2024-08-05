@@ -2,6 +2,7 @@ package org.homework;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.NoSuchElementException;
@@ -36,6 +37,9 @@ public class TodoController {
                     case SEARCH:
                         search();
                         break;
+                    case SELECTALL:
+                        selectDeadlinesSevenDays();
+                        break;
                     case EXIT:
                         exit();
                         return;
@@ -59,7 +63,7 @@ public class TodoController {
 
     private void save() throws ParseException {
         String content = inputView.inputContent();
-        Date date = inputView.inputDate();
+        LocalDate date = inputView.inputDate();
         Todo todo = new Todo(content, date);
         outputView.outPutAddTodo(todoService.save(todo));
     }
@@ -91,6 +95,12 @@ public class TodoController {
                 todoService.search(
                         inputView.inputSearchContent()
                 )
+        );
+    }
+
+    private void selectDeadlinesSevenDays() {
+        outputView.outPutTodoAll(
+                todoService.selectDeadlinesSevenDays()
         );
     }
 }

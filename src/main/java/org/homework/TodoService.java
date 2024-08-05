@@ -38,4 +38,8 @@ public class TodoService {
     public List<Todo> search(String content) {
         return todoRepository.search(content);
     }
+
+    public List<Todo> selectDeadlinesSevenDays() {
+        return todoRepository.selectDeadlinesSevenDays();
+    }
 }

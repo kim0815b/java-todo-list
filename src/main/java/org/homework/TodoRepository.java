@@ -1,11 +1,11 @@
 package org.homework;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static java.time.LocalDate.*;
 
 public class TodoRepository {
     private final Map<Integer, Todo> todoMap = new HashMap<>();
@@ -30,6 +30,14 @@ public class TodoRepository {
     public List<Todo> search(String content) {
         return todoMap.values().stream()
                 .filter(todo -> todo.getContent().contains(content))
+                .collect(Collectors.toList());
+    }
+
+    public List<Todo> selectDeadlinesSevenDays() {
+        LocalDate today = LocalDate.now();
+        LocalDate sevenDaysLater = today.plusDays(7);
+        return todoMap.values().stream()
+                .filter(todo -> !todo.getEndDate().isBefore(today) && !todo.getEndDate().isAfter(sevenDaysLater))
                 .collect(Collectors.toList());
     }
 }

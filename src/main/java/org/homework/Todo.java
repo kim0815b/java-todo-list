@@ -1,13 +1,14 @@
 package org.homework;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Todo {
     private int id;
     private String content;
     private boolean status;
-    private Date endDate;
+    private LocalDate endDate;
 
     public Todo() {
     }
@@ -16,7 +17,7 @@ public class Todo {
         this.content = content;
     }
 
-    public Todo(String content, Date endDate) {
+    public Todo(String content, LocalDate endDate) {
         this.content = content;
         this.endDate = endDate;
     }
@@ -45,11 +46,11 @@ public class Todo {
         this.status = status;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
